@@ -2,8 +2,10 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <list>
+#include <ctime>
 
 using namespace std;
 
@@ -140,12 +142,21 @@ int64_t evallist()
 	return newtoken.value;
 }
 
-int main()
+int main(int argc, char* argv[], char* envp[])
 {
-	Expr = "-2-2*2+7*3-6*100";
-	cout << "exp = " << Expr << "\n";
+	//Expr = "-2--6--8--5--1-6+-9*2--8*4+6";
+	fstream myfile;
+	myfile.open(argv[1], ios_base::in);
+	if (myfile.is_open())
+		getline(myfile,Expr);
+	myfile.close();
+	// cout << "exp = " << Expr << "\n";
+	clock_t starttime;
+	starttime = clock();
 	parse();
-	cout << "exp = " << evallist();
+	cout << "exp = " << evallist() << "\n";
+	cout << "time = " << clock() - starttime << "\n";
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
